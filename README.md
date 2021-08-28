@@ -1,1 +1,1 @@
-# cdac-project
+# smallcase-task
