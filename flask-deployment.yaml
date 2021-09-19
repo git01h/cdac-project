@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-deployment
-  namespace: smallcase-demo
+  namespace: cdac-project
   labels:
     app: flask
 spec:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: flask
-        image: registry.hub.docker.com/megiakki/versha-project:%IMAGE_NO%
+        image: registry.hub.docker.com/8077103273/cdac-project:%IMAGE_NO%
         ports:
         - containerPort: 5000
