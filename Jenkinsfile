@@ -95,7 +95,7 @@ node{
         
         stage('Clean docker images from local') {
         
-      sh 'docker rmi $(docker images -q -a) --force'
+      sh 'docker rmi $(docker images -q -a) --force | true'
 
   }
 }
