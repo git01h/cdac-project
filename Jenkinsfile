@@ -44,7 +44,6 @@ node{
           ]]){
       sh '''
               kubectl version --short --client
-              eksctl version
               aws eks --region us-east-1 update-kubeconfig --name ${product}-cluster
               kubectl get svc
               echo "Execute the deployment"
