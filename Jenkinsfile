@@ -6,12 +6,12 @@ node{
     }
     stage('Clone repository') {
         echo "Cloning git repository to workspace"
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_akash', url: 'https://github.com/akki8400/smallcase-task.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'git_akash', url: 'https://github.com/akssharma1994/cdac-project.git']]])
     }
 
     stage('Build image') {
         echo 'Build the docker flask image'
-        app = docker.build("megiakki/versha-project")
+        app = docker.build("cdac-project")
     }
 
     stage('Test image') {
