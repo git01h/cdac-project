@@ -50,7 +50,7 @@ node{
               kubectl get svc
               echo "Execute the deployment"
               kubectl create namespace $PRODUCT
-              if [ "$?" -eq 0 ]; then
+              if [ $? -eq 0 ]; then
                   echo "namespace $PRODUCT already exists"
                   kubectl get all -n $PRODUCT
               else
@@ -80,7 +80,7 @@ node{
                 PRODUCT="cdac-project"
                 echo $PATH
                 kubectl get all -n $PRODUCT
-                sleep 20s
+                sleep 60s
                 EXTERNAL_IP=`kubectl get service flask-service -n $PRODUCT | awk 'NR==2 {print $4}'`
                 STATUS_CODE=`curl -s -o /dev/null -w "%{http_code}" http://${EXTERNAL_IP}:5000`
                 echo $STATUS_CODE
