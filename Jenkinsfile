@@ -1,6 +1,6 @@
 node{
     def app
-    def product="cdac-project"
+    def product = "cdac-project"
     stage('clean workspace'){
         echo 'Clean Workspace '
         cleanWs()
@@ -42,18 +42,20 @@ node{
               accessKeyVariable: 'AWS_ACCESS_KEY_ID',
               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
           ]]){
-      sh '''
+      
+      sh """
+              PRODUCT="${product}"
               kubectl version --short --client
-              aws eks --region us-east-1 update-kubeconfig --name ${product}-cluster
+              aws eks --region us-east-1 update-kubeconfig --name $PRODUCT-cluster
               kubectl get svc
               echo "Execute the deployment"
-              kubectl create namespace ${product}
+              kubectl create namespace $PRODUCT
               if [ $? -eq 0 ]; then
-                  echo "namespace ${product} already exists"
-                  kubectl get all -n ${product}
+                  echo "namespace $PRODUCT already exists"
+                  kubectl get all -n $PRODUCT
               else
-                  echo "create ${product} namespace"
-                  kubectl create namespace ${product}
+                  echo "create $PRODUCT namespace"
+                  kubectl create namespace $PRODUCT
               fi
               echo "Apply the deployment"
               kubectl apply -f flask-deployment.yaml
@@ -61,10 +63,10 @@ node{
               kubectl apply -f flask-service.yaml
               sleep 5s
               echo "\n\n Deployment details \n\n"
-              kubectl get all -n ${product}
+              kubectl get all -n $PRODUCT
 
               echo "Deployment done successfully"
-        '''
+        """
     }  }
     stage('Deployment Test'){
         echo 'Test the deployment using curl on service external address'
@@ -74,11 +76,12 @@ node{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]){
-        sh '''
+        sh """
+                PRODUCT="${product}"
                 echo $PATH
-                kubectl get all -n ${product}
+                kubectl get all -n $PRODUCT
                 sleep 20s
-                EXTERNAL_IP=`kubectl get service flask-service -n ${product} | awk 'NR==2 {print $4}'`
+                EXTERNAL_IP=`kubectl get service flask-service -n $PRODUCT | awk 'NR==2 {print $4}'`
                 STATUS_CODE=`curl -s -o /dev/null -w "%{http_code}" http://${EXTERNAL_IP}:5000`
                 echo $STATUS_CODE
                 if [ $STATUS_CODE -eq 200 ]; then
@@ -87,12 +90,14 @@ node{
                     echo "\n\nApplication not responding deployment Failed\n\n "
                     exit 1
                 fi
-          '''
+          """
         } }
+        
         stage('Clean docker images from local') {
-      sh '''
-          sudo docker images -a | grep ${product} | awk '{print $3}' | xargs docker rmi -f
-      '''
+      sh """
+          PRODUCT="${product}"  
+          sudo docker images -a | grep $PRODUCT | awk '{print $3}' | xargs docker rmi -f
+      """
 
   }
 }
