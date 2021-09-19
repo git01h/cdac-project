@@ -22,7 +22,7 @@ node{
     }
     stage('Push image') {
         echo 'Push image to the docker hub'
-        docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_AKKI') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker_cred') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
