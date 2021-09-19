@@ -49,7 +49,7 @@ node{
               aws eks --region us-east-1 update-kubeconfig --name $PRODUCT-cluster
               kubectl get svc
               echo "Execute the deployment"
-              kubectl create namespace $PRODUCT
+              kubectl get namespace $PRODUCT
               if [ $? -eq 0 ]; then
                   echo "namespace $PRODUCT already exists"
                   kubectl get all -n $PRODUCT
