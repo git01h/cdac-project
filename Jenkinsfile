@@ -94,7 +94,8 @@ node{
         } }
         
         stage('Clean docker images from local') {
-      sh   " sudo docker images -a | grep "${product}" | awk "{print $3}" | xargs sudo docker rmi -f "
+            sh "sudo docker images -a"
+      sh   " sudo docker rmi -f `sudo docker images -a | awk "{print $3}"` "
 
   }
 }
