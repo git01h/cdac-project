@@ -17,4 +17,4 @@ nodeGroups:
     desiredCapacity: 2
     volumeSize: 40
     ssh:
-      publicKeyPath: nveg.pub
+      publicKeyPath: ~/.ssh/id_rsa.pub
