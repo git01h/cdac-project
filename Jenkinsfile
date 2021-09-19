@@ -43,14 +43,14 @@ node{
               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
           ]]){
       
-      sh """
-              PRODUCT="${product}"
+      sh '''
+              PRODUCT="cdac-project"
               kubectl version --short --client
               aws eks --region us-east-1 update-kubeconfig --name $PRODUCT-cluster
               kubectl get svc
               echo "Execute the deployment"
               kubectl create namespace $PRODUCT
-              if [ $? -eq 0 ]; then
+              if [ "$?" -eq 0 ]; then
                   echo "namespace $PRODUCT already exists"
                   kubectl get all -n $PRODUCT
               else
@@ -66,7 +66,7 @@ node{
               kubectl get all -n $PRODUCT
 
               echo "Deployment done successfully"
-        """
+        '''
     }  }
     stage('Deployment Test'){
         echo 'Test the deployment using curl on service external address'
@@ -76,8 +76,8 @@ node{
                 accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                 secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
             ]]){
-        sh """
-                PRODUCT="${product}"
+        sh '''
+                PRODUCT="cdac-project"
                 echo $PATH
                 kubectl get all -n $PRODUCT
                 sleep 20s
@@ -90,14 +90,14 @@ node{
                     echo "\n\nApplication not responding deployment Failed\n\n "
                     exit 1
                 fi
-          """
+          '''
         } }
         
         stage('Clean docker images from local') {
-      sh """
-          PRODUCT="${product}"  
+      sh '''
+          PRODUCT="cdac-project"  
           sudo docker images -a | grep $PRODUCT | awk '{print $3}' | xargs docker rmi -f
-      """
+      '''
 
   }
 }
