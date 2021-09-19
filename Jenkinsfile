@@ -43,20 +43,18 @@ node{
               secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
           ]]){
       sh """
-
-              
               kubectl version --short --client
               eksctl version
               aws eks --region us-east-1 update-kubeconfig --name ${product}-cluster
               kubectl get svc
               echo "Execute the deployment"
-              kubectl create namespace ${product}
+              kubectl create namespace "${product}"
               if [ $? -eq 0 ]; then
                   echo "namespace ${product} already exists"
-                  kubectl get all -n ${product}
+                  kubectl get all -n "${product}"
               else
                   echo "create ${product} namespace"
-                  kubectl create namespace ${product}
+                  kubectl create namespace "${product}"
               fi
               echo "Apply the deployment"
               kubectl apply -f flask-deployment.yaml
@@ -64,7 +62,7 @@ node{
               kubectl apply -f flask-service.yaml
               sleep 5s
               echo "\n\n Deployment details \n\n"
-              kubectl get all -n ${product}
+              kubectl get all -n "${product}"
 
               echo "Deployment done successfully"
         """
@@ -79,9 +77,9 @@ node{
             ]]){
         sh """
                 echo $PATH
-                kubectl get all -n ${product}
+                kubectl get all -n "${product}"
                 sleep 20s
-                EXTERNAL_IP=`kubectl get service flask-service -n ${product} | awk 'NR==2 {print $4}'`
+                EXTERNAL_IP=`kubectl get service flask-service -n "${product}" | awk 'NR==2 {print $4}'`
                 STATUS_CODE=`curl -s -o /dev/null -w "%{http_code}" http://${EXTERNAL_IP}:5000`
                 echo $STATUS_CODE
                 if [ $STATUS_CODE -eq 200 ]; then
