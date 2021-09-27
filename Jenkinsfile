@@ -12,7 +12,7 @@ node{
 
     stage('Build image') {
         echo 'Build the docker flask image'
-        app = docker.build("8077103273/${product}")
+        app = docker.build("8077103273/cdac-project")
     }
 
     stage('Test image') {
