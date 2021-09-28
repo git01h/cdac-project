@@ -1,4 +1,4 @@
-app = Flask(__name__)
+app=Flask(__name__)
 
 # list of cat images
 image_urls_map = {
