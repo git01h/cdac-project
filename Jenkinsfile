@@ -35,7 +35,7 @@ node{
      sh "cat flask-deployment.yaml"
     }
     stage('Deploy the flask app'){
-      echo 'Deploy the flasj image at AWS EKS, on Cluster already present in EKS'
+      echo 'Deploy the flask image at AWS EKS, on Cluster already present in EKS'
       withCredentials([[
               $class: 'AmazonWebServicesCredentialsBinding',
               credentialsId: 'AWS_CREDS',
