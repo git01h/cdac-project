@@ -1,4 +1,3 @@
-import flask
 app = Flask(__name__)
 
 # list of cat images
