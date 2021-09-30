@@ -46,7 +46,7 @@ node{
       sh '''
               PRODUCT="cdac-project"
               kubectl version --short --client
-              aws eks --region us-east-1 update-kubeconfig --name $PRODUCT-cluster
+              aws eks --region us-east-1 update-kubeconfig --name $PRODUCT-clusters
               kubectl get svc
               echo "Execute the deployment"
               kubectl get namespace $PRODUCT
