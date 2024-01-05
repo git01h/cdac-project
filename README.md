@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #CI-CD PIPELINE JOB
 Description: 
 	this project contains complete secure contineous integration and cont.. deployment of python based microservice 
@@ -37,3 +38,6 @@ Jenkins server setup on EC2
 	docker-ce
 	python 3.6
 	
+=======
+# cdac-project
+>>>>>>> 05d3e356a2c808910f69ba3c4700c4ade45fe417
